@@ -1,24 +1,24 @@
 # Pregnancy Companion API
 
-API REST creada con Java 21, Spring Boot y Maven.
+REST API built with Java 21, Spring Boot and Maven.
 
-## Ejecutar
+## Run
 
-En Windows, desde la carpeta del proyecto:
+On Windows, from the project folder:
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-La aplicación se inicia en `http://localhost:8080`.
+The application starts at `http://localhost:8080`.
 
-## Endpoint inicial
+## Initial endpoint
 
 ```http
 GET /api/v1/status
 ```
 
-Respuesta:
+Response:
 
 ```json
 {
@@ -27,7 +27,7 @@ Respuesta:
 }
 ```
 
-## Ejecutar las pruebas
+## Run the tests
 
 ```powershell
 .\mvnw.cmd test
