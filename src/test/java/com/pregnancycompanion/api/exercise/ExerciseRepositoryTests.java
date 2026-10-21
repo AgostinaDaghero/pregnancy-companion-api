@@ -65,6 +65,33 @@ class ExerciseRepositoryTests {
 		assertThat(after.getUpdatedAt()).isAfter(updatedAtBefore);
 	}
 
+	@Test
+	void findByActiveTrueExcludesInactiveExercises() {
+		Exercise active = repository.save(newExercise());
+		Exercise inactive = newExercise();
+		inactive.setName("Retired exercise");
+		inactive.setActive(false);
+		repository.save(inactive);
+		entityManager.flush();
+		entityManager.clear();
+
+		assertThat(repository.findByActiveTrue())
+				.extracting(Exercise::getId)
+				.containsExactly(active.getId());
+	}
+
+	@Test
+	void findByIdAndActiveTrueReturnsEmptyForAnInactiveExercise() {
+		Exercise inactive = newExercise();
+		inactive.setActive(false);
+		Exercise saved = repository.save(inactive);
+		entityManager.flush();
+		entityManager.clear();
+
+		assertThat(repository.findById(saved.getId())).isPresent();
+		assertThat(repository.findByIdAndActiveTrue(saved.getId())).isEmpty();
+	}
+
 	private Exercise newExercise() {
 		return new Exercise(
 				"Cat-cow stretch",
